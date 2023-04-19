@@ -1,23 +1,23 @@
 <div align=center>
-<img src="https://github.com/BestModules-Libraries/img/blob/main/BM25S2021-1_BME33M251_V1.0.png" width="480" height="240"> 
+<img src="https://github.com/BestModules-Libraries/img/blob/main/BM7701-00-1_BMC77M001_V1.0.png" width="480" height="240"> 
 </div> 
 
-BM25S2021-1
+BM7701-00-1
 ===========================================================
 
-The BEST MODULES BM25S2021-1 is a temperature and humidity digital sensor, which uses the I2C or the One-wire communication method. This document provides the description of the BM25S2021-1 Arduino Lib functions and how to install the Arduino Lib. The example demonstrates the function of reading the temperature and humidity values with the BME33M251.
+The Best Modules BM7701-00-1 is a Bluetooth module, which uses the UART communication method. This document provides the description of the BM7701-00-1 Arduino Lib functions and how to install the Arduino Lib. The example demonstrates the function of data transparent transmission with the BMC77M001 module.
 
 #### Applicable types:
 <div align=center>
 
-|Part No.   |Description                             |
-|:---------:|:--------------------------------------:|
-|BM25S2021-1 |Temperature and humidity digital sensor|
-|BME33M251  |Integrated BM25S2021-1 sensor           |
+|Part No.   |Description                  |
+|:---------:|:---------------------------:|
+|BM7701-00-1 |Bluetooth module            |
+|BMC77M001  |Integrated BM7701-00-1 module|
 
 </div> 
 
-This library can be installed via the Arduino Library manager. Search for **BM25S2021-1**. 
+This library can be installed via the Arduino Library manager. Search for **BM7701-00-1**. 
 
 Repository Contents
 -------------------
@@ -30,7 +30,7 @@ Repository Contents
 Documentation 
 -------------------
 
-* **[BM25S2021-1 Arduino Library V1.0.1 Description v100](https://www.bestmodulescorp.com/bm25s2021-1.html#tab-product2)** - Arduino Library Description.
+* **[BM7701-00-1 Arduino Library V1.0.1 Description v100](https://www.bestmodulescorp.com/bm7701-00-1.html#tab-product2)** - Arduino Library Description.
 
 Version History  
 -------------------

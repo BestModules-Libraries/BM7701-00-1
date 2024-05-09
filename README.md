@@ -30,12 +30,15 @@ Repository Contents
 Documentation 
 -------------------
 
-* **[BM7701-00-1 Arduino Library V1.0.1 Description v100](https://www.bestmodulescorp.com/bm7701-00-1.html#tab-product2)** - Arduino Library Description.
+* **[BM7701-00-1 Arduino Library Description](https://www.bestmodulescorp.com/bm7701-00-1.html#tab-product2)** - Arduino Library Description.
 
 Version History  
 -------------------
 
-* **V1.0.1** - Initial public release.
+* **V1.0.1**  
+&emsp;&emsp;- Initial public release.
+* **V1.0.2**  
+&emsp;&emsp;- Changed the "schematic" and "layout" images of the example "writeAndRead".
 
 License Information
 -------------------
@@ -49,3 +52,4 @@ If you have any questions or concerns on licensing, please contact technical sup
 Distributed as-is; no warranty is given.
 
 BESTMODULES
+

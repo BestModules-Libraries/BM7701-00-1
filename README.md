@@ -1,4 +1,4 @@
-<div align=center>
+﻿<div align=center>
 <img src="https://github.com/BestModules-Libraries/img/blob/main/BM7701-00-1_BMC77M001_V1.0.png" width="480" height="240"> 
 </div> 
 
@@ -14,6 +14,7 @@ The Best Modules BM7701-00-1 is a Bluetooth module, which uses the UART communic
 |:---------:|:---------------------------:|
 |BM7701-00-1 |Bluetooth module            |
 |BMC77M001  |Integrated BM7701-00-1 module|
+|BMC77M001A |Integrated BM7701-00-1 module|
 
 </div> 
 
@@ -39,6 +40,9 @@ Version History
 &emsp;&emsp;- Initial public release.
 * **V1.0.2**  
 &emsp;&emsp;- Changed the "schematic" and "layout" images of the example "writeAndRead".
+* **V1.0.3**  
+&emsp;&emsp;- Add the function "sendData" and "receiveData";  
+&emsp;&emsp;- Add the example "simpleWriteAndRead".
 
 License Information
 -------------------
@@ -47,9 +51,9 @@ This product is _**open source**_!
 
 Please review the LICENSE.md file for license information. 
 
-If you have any questions or concerns on licensing, please contact technical support on our BESTMODULES Email:service@bestmodulescorp.com.
+If you have any questions or concerns on licensing, please contact technical support on our BEST MODULES CORP. Email:service@bestmodulescorp.com.
 
 Distributed as-is; no warranty is given.
 
-BESTMODULES
+BEST MODULES CORP. 
 

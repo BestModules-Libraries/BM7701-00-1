@@ -1,5 +1,5 @@
 /*************************************************
-  File:             write.ino
+  File:             writeAndRead.ino
   Description:      The module is connected to the mobile phone APP "BLEDemo", press the key on the APP, 
                     the module receives the key and prints it to the serial port monitor, 
                     and then sends the corresponding data to the APP, making the LED on the APP light up

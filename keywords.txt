@@ -14,6 +14,8 @@ setAdvCtrl	KEYWORD2
 disconnect	KEYWORD2
 writeData	KEYWORD2
 readData	KEYWORD2
+sendData	KEYWORD2
+receiveData	KEYWORD2
 setAdvIntv	KEYWORD2
 setAdvData	KEYWORD2
 setScanData	KEYWORD2

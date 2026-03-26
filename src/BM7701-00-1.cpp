@@ -1,9 +1,9 @@
 /*****************************************************************
 File:        BM7701-00-1.cpp
-Author:      BESTMODULES
+Author:      BEST MODULES CORP.
 Description: UART communication with the BM7701_00_1 
              and control bc7701 to transmit data with mobile phone  
-Version:     V1.0.2   -- 2024-05-09
+Version:     V1.0.3   -- 2025-01-21
 ******************************************************************/
 #include <BM7701-00-1.h>
 
@@ -134,7 +134,7 @@ bool BM7701_00_1::disconnect()
    return flag;
 }
 /**********************************************************
-Description:    BC7701 Send Data 
+Description:    BC7701 writeData Data 
 Parameters:     length: <128 byte 
                 Data                         
 Return:         true:reply true event
@@ -146,7 +146,7 @@ bool BM7701_00_1::writeData(uint8_t dataBuf[],uint8_t length)
    bool flag = false;
    uint32_t current_time,previous_time;
    uint8_t i;
-   uint8_t data[255]= {0x77,length,0x20,0xF1,0xFF,0xb1};
+   uint8_t data[255]= {0x77,length,0x20,0xF1,0xFF,0xb2};
    for(i=0;i<length;i++)
    {
     data[6+i]=dataBuf[i];
@@ -178,7 +178,8 @@ bool BM7701_00_1::writeData(uint8_t dataBuf[],uint8_t length)
 }
 /**********************************************************
 Description:    readData
-Parameters:     none                     
+Parameters:     receiveBuff:Received custom data(not include:Header,Length)
+                &length: Received data length                   
 Return:         0: check ok
         1: check error
         2: timeout error
@@ -190,25 +191,137 @@ bool BM7701_00_1::readData(uint8_t receiveBuff[],uint8_t &length)
  if (_softSerial != NULL)
   {
     while (_softSerial->available() > 2)  
-     {
-     readBytes(receive,2,50); 
-     length=receive[1];
-     readBytes(receiveBuff,length,50);
-     }
-     return true;
+    {
+      readBytes(receive,2,50); //Header,Length
+      if(receive[0]!=0x78)
+      {
+        while (_softSerial->available() != 0) 
+        {
+          _softSerial->read();
+        }
+        return false;
+      }
+      length=receive[1];
+      readBytes(receiveBuff,length,50);
+      return true;
+    }
+    return false;
   }
   else
   {
     while (_serial->available() > 2)  
-     {
-     readBytes(receive,2,50); 
-     length=receive[1];
-     readBytes(receiveBuff,length,50);
-     }
-     return true;
-  }
+    {
+      readBytes(receive,2,50);  //Header,Length
+      if(receive[0]!=0x78)
+      {
+        while (_softSerial->available() != 0) 
+        {
+          _softSerial->read();
+        }
+        return false;
+      }
+      length=receive[1];
+      readBytes(receiveBuff,length,50);
+      return true;
+    }
      return false;
+  }
+  return false;
 }
+/**********************************************************
+Description:    BC7701 Send Data 
+Parameters:     length: <128 byte 
+                Data                         
+Return:         true:reply true event
+                false:reply false event
+Others:        
+**********************************************************/
+bool BM7701_00_1::sendData(uint8_t dataBuf[],uint8_t length)
+{
+   bool flag = false;
+   uint32_t current_time,previous_time;
+   uint8_t i;
+   uint8_t data[255]= {0x77,0,0x20,0xF1,0xFF};
+   for(i=0;i<length;i++)
+   {
+    data[5+i]=dataBuf[i];
+   }
+   data[1]=length+3; //CmdFlag/EvtStatus,Type1,Type2,value(length Bytes)
+   writeBytes(data,length+5);
+
+   previous_time=millis();
+   while(1)
+   {
+     current_time=millis();
+     if((current_time - previous_time)>=EVT_RETURN_TIME)
+        return flag;
+     else if (current_time - previous_time <= 0)                   
+        {   
+          previous_time = current_time;
+        }
+     if(readData(receive_data,len))
+     {
+      if(receive_data[0]==0x20 && receive_data[1]==0xF1 && 
+                                    receive_data[2]==0xFF)
+      {
+        flag = true;
+        break;
+      }
+      }    
+    }
+   return flag;
+}
+/**********************************************************
+Description:    receiveData
+Parameters:     receiveBuff:Received custom data(not include:Header,Length,CmdFlag/EvtStatus,Type1,Type2)
+                &length: Received data length
+Return:         0x81: API_CONNECTED
+                0x82: API_DISCONNECTED
+                0x83: DATA_RECEIVED
+                0x84: API_ERROR
+Others:        
+**********************************************************/
+uint8_t BM7701_00_1::receiveData(uint8_t receiveBuff[],uint8_t &length)
+{
+  uint8_t receive[256]={0};
+  uint8_t st = 0x00;
+  uint8_t receiveLen = 0x00;
+  if(readData(receive,receiveLen))
+  {
+    st = API_ERROR;
+    switch (receive[1])
+    {
+      case 0x00:
+        if (receive[0] == 0x00)
+        {
+          if ((receive[3] & 0x01) == 0x01)
+          {
+            st = API_CONNECTED;
+          }
+          else st = API_DISCONNECTED;
+
+        }
+        break;
+      case 0xF2:
+        if ((receive[0] == 0x00) && (receive[2] == 0xFF))
+        {
+          st = DATA_RECEIVED;
+        }
+        break;
+      default: 
+        break;
+    }
+    length = receiveLen - 3;
+    for(uint8_t i=0;i<length;i++)
+    {
+      receiveBuff[i] = receive[3+i];
+    }
+    return st;
+  }
+  return st;
+
+}
+
 /**********************************************************
 Description:    Change baud rate
 Parameters:     br:1200~125000      

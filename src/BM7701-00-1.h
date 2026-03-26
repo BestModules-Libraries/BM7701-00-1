@@ -1,18 +1,16 @@
 /*************************************************
 File:             BM7701-00-1.h
-Author:           BESTMODULES
+Author:           BEST MODULES CORP.
 Description:      Header file
-Version:          V1.0.2   -- 2024-05-09
+Version:          V1.0.3   -- 2025-01-21
 **************************************************/
 #ifndef _BM7701_00_1_H__
 #define _BM7701_00_1_H__
-
 
 #include "Arduino.h"
 #include <SoftwareSerial.h>
 
 extern uint8_t receive_data[256];
-
 
 typedef struct 
 {  
@@ -20,7 +18,6 @@ typedef struct
   u8    serial;
   u8    checksum;
 } KEY_MESSAGE;
-
 
 #define EVT_RETURN_TIME 150 
 
@@ -110,7 +107,9 @@ typedef struct
   bool setAdvCtrl(bool ctrl);                                                                                //Turn on broadcast
   bool disconnect();                                                                                                 //Disconnect 
   bool writeData(uint8_t dataBuf[],uint8_t length);                                                                       //BC7701 Send Data
-  bool readData(uint8_t receiveBuff[],uint8_t &length);   
+  bool readData(uint8_t receiveBuff[],uint8_t &length);  
+  bool sendData(uint8_t dataBuf[],uint8_t length);                                                                       //BC7701 Send Data
+  uint8_t receiveData(uint8_t receiveBuff[],uint8_t &length);  
   bool setAdvIntv(uint16_t min,uint16_t max,uint8_t advMap);                                                          //Set Advertise Interval
   bool setAdvData(uint8_t appendName,uint8_t length,uint8_t advData[]);                                                                  //Set Advertise Data
   bool setScanData(uint8_t length,uint8_t scanData[]);                                                                //Set Scan Data
@@ -131,6 +130,8 @@ typedef struct
   bool readCMD(uint16_t type,uint8_t cmd_flag);                                                                 //Send Read Command with waiting evt
   void readCMD_NoResponse(uint16_t type,uint8_t cmd_flag);                                                           //Send Read Command with no waiting evt
   
+  uint8_t cmdFlag = 0;  //MCU to BLE
+  uint8_t evtStatus = 0;//BLE to MCU
   private:
   uint8_t receive_data[256];      //receive buffer
   uint8_t len;
